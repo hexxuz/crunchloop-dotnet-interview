@@ -17,6 +17,7 @@ namespace TodoApi.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsCompleted = table.Column<bool>(type: "bit", nullable: false),
                     ListId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

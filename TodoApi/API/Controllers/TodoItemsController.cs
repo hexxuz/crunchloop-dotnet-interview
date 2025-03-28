@@ -1,31 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TodoApi.Domain.Models.Lists;
-using TodoApi.Infrastructure.Interfaces;
+using TodoApi.Application.TodoItems.Commands;
 
 namespace TodoApi.API.Controllers
 {
-    [Route("todoitems/{listId}")]
+    [Route("api/todolists/{listId}/todoitems")]
     [ApiController]
     public class TodoItemsController : BaseController
     {
-        private readonly IDbContext _context;
-
-        public TodoItemsController(IDbContext context)
+        [HttpPost]
+        public async Task<ActionResult> PostTodoItem(long listId, [FromBody] CreateTodoItemCommand command, CancellationToken cancellationToken = default)
         {
-            _context = context;
-        }
+            command.ListId = listId;
 
-        [HttpGet]
-        public async Task<ActionResult<IList<TodoList>>> GetTodoItems(long listId, CancellationToken cancellationToken = default)
-        {
-            TodoList? list = await _context.TodoList
-                .Where(l => l.Id == listId)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            return list is null ?
-                NoContent() :
-                Ok(list.TodoItems);
+            return await Mediator.Send(command, cancellationToken);
         }
     }
 }

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace TodoApi.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
     public abstract class BaseController : ControllerBase
     {
         private ISender? _mediator;

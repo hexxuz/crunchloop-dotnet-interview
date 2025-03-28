@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace TodoApi.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20250328184201_CreateTodoItems")]
+    [Migration("20250328191354_CreateTodoItems")]
     partial class CreateTodoItems
     {
         /// <inheritdoc />
@@ -30,6 +30,9 @@ namespace TodoApi.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
 
                     b.Property<long>("ListId")
                         .HasColumnType("bigint");

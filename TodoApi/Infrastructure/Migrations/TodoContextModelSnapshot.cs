@@ -28,6 +28,9 @@ namespace TodoApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
                     b.Property<long>("ListId")
                         .HasColumnType("bigint");
 

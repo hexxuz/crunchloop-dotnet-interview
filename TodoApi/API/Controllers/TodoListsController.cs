@@ -5,7 +5,7 @@ using TodoApi.Domain.Models.Lists;
 
 namespace TodoApi.API.Controllers
 {
-    [Route("todolists")]
+    [Route("api/todolists")]
     [ApiController]
     public class TodoListsController : BaseController
     {
