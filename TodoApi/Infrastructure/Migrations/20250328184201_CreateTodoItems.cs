@@ -17,23 +17,23 @@ namespace TodoApi.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ListId = table.Column<int>(type: "int", nullable: false),
-                    TodoListId = table.Column<long>(type: "bigint", nullable: true)
+                    ListId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TodoItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TodoItem_TodoList_TodoListId",
-                        column: x => x.TodoListId,
+                        name: "FK_TodoItem_TodoList_ListId",
+                        column: x => x.ListId,
                         principalTable: "TodoList",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TodoItem_TodoListId",
+                name: "IX_TodoItem_ListId",
                 table: "TodoItem",
-                column: "TodoListId");
+                column: "ListId");
         }
 
         /// <inheritdoc />

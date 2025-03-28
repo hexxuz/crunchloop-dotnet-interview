@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TodoApi.Controllers
+namespace TodoApi.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

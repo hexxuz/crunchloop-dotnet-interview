@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TodoApi.Interfaces;
-using TodoApi.Models.Lists;
+using TodoApi.Domain.Models.Lists;
+using TodoApi.Infrastructure.Interfaces;
 
-namespace TodoApi.Controllers
+namespace TodoApi.API.Controllers
 {
     [Route("todoitems/{listId}")]
     [ApiController]
-    public class TodoItemsController : ControllerBase
+    public class TodoItemsController : BaseController
     {
         private readonly IDbContext _context;
 

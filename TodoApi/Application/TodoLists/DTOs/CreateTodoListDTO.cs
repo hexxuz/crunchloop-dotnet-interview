@@ -1,4 +1,4 @@
-namespace TodoApi.Dtos.Lists;
+namespace TodoApi.Application.TodoLists.DTOs;
 
 public class CreateTodoListDTO
 {

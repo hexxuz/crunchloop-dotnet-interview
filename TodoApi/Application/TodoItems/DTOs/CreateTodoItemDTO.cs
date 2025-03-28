@@ -1,4 +1,4 @@
-﻿namespace TodoApi.Dtos.Items
+﻿namespace TodoApi.Application.TodoItems.DTOs
 {
     public class CreateTodoItemDTO
     {
