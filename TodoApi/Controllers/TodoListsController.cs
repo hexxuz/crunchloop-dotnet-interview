@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TodoApi.Dtos;
-using TodoApi.Models;
+using TodoApi.Dtos.Lists;
+using TodoApi.Models.Lists;
 
 namespace TodoApi.Controllers
 {
@@ -40,7 +40,7 @@ namespace TodoApi.Controllers
         // PUT: api/todolists/5
         // To protect from over-posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutTodoList(long id, UpdateTodoList payload)
+        public async Task<ActionResult> PutTodoList(long id, UpdateTodoListDTO payload)
         {
             var todoList = await _context.TodoList.FindAsync(id);
 
@@ -58,7 +58,7 @@ namespace TodoApi.Controllers
         // POST: api/todolists
         // To protect from over-posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TodoList>> PostTodoList(CreateTodoList payload)
+        public async Task<ActionResult<TodoList>> PostTodoList(CreateTodoListDTO payload)
         {
             var todoList = new TodoList { Name = payload.Name };
 

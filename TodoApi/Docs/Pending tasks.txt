@@ -1,0 +1,23 @@
+General
+1.	Project structure improvement
+2.  Directories creation & files replacement
+
+TodoItems CRUD 
+1.	Analyze & implement models
+2.	Define controller & paths
+3.	DTOs usage
+4.	Mappings implementation
+5.	Endpoints logic implementation
+6.	Migration
+
+Interfaces & abstraction
+1. Abstract Db Context
+2. Dependency injection
+3. Implement interface
+4. CQRS  (MediatR setup)
+
+Background process to remove bulk items
+1. Analysis
+2. Implementation
+
+Overall testing
