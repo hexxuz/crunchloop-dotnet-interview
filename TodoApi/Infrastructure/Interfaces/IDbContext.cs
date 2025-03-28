@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TodoApi.Models.Items;
-using TodoApi.Models.Lists;
+using TodoApi.Domain.Models.Items;
+using TodoApi.Domain.Models.Lists;
 
-namespace TodoApi.Interfaces
+namespace TodoApi.Infrastructure.Interfaces
 {
     public interface IDbContext
     {

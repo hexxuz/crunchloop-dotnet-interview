@@ -1,25 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Dtos.Lists;
-using TodoApi.Interfaces;
 using TodoApi.Models.Lists;
 
 namespace TodoApi.Controllers
 {
-    [Route("api/todoitems/{listId}")]
+    [Route("todolists")]
     [ApiController]
-    public class TodoItemsController : ControllerBase
+    public class TodoListsController : BaseController
     {
-        private readonly IDbContext _context;
+        private readonly TodoContext _context;
 
-        public TodoItemsController(IDbContext context)
+        public TodoListsController(TodoContext context)
         {
             _context = context;
         }
 
         // GET: api/todolists
         [HttpGet]
-        public async Task<ActionResult<IList<TodoList>>> GetTodoLists(long listId)
+        public async Task<ActionResult<IList<TodoList>>> GetTodoLists()
         {
             return Ok(await _context.TodoList.ToListAsync());
         }
