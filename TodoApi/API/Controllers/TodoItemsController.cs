@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TodoApi.Application.TodoItems.Commands;
+using TodoApi.Application.TodoItems.Queries;
 
 namespace TodoApi.API.Controllers
 {
@@ -13,6 +14,12 @@ namespace TodoApi.API.Controllers
             command.ListId = listId;
 
             return await Mediator.Send(command, cancellationToken);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetTodoItems(long listId, CancellationToken cancellationToken = default)
+        {
+            return await Mediator.Send(new GetTodoItemsQuery() { ListId = listId }, cancellationToken);
         }
     }
 }

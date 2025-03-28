@@ -1,23 +1,26 @@
 General
-1.	Project structure improvement
-2.  Directories creation & files replacement
-
+1.	Project structure improvement - DONE
+2.  Directories creation & files replacement - DONE
+######################################################
 TodoItems CRUD 
-1.	Analyze & implement models
-2.	Define controller & paths
-3.	DTOs usage
-4.	Mappings implementation
-5.	Endpoints logic implementation
-6.	Migration
-
+1.	Analyze & implement models - DONE
+2.	Define controller & paths - DONE
+3.	DTOs usage - DONE
+4.	Mappings implementation - Pending
+5.	Endpoints logic implementation - In progress
+6.	Migration - DONE
+######################################################
 Interfaces & abstraction
-1. Abstract Db Context
-2. Dependency injection
-3. Implement interface
-4. CQRS  (MediatR setup)
-
+1. DbContext abstraction - DONE
+2. Dependency injection - DONE
+3. Implement interface - DONE
+4. CQRS  (MediatR setup) - DONE
+######################################################
 Background process to remove bulk items
-1. Analysis
-2. Implementation
-
-Overall testing
+1. Analysis - Pending
+2. Implementation - Pending
+######################################################
+Testing
+1. Test cases definition - Pending
+2. Tests implementation - Pending
+######################################################
