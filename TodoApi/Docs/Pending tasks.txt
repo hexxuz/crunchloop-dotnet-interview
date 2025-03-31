@@ -7,7 +7,7 @@ TodoItems CRUD
 2.	Define controller & paths - DONE
 3.	DTOs usage - DONE
 4.	Mappings implementation - Pending
-5.	Endpoints logic implementation - In progress
+5.	Endpoints logic implementation - DONE
 6.	Migration - DONE
 ######################################################
 Interfaces & abstraction
@@ -17,7 +17,7 @@ Interfaces & abstraction
 4. CQRS  (MediatR setup) - DONE
 ######################################################
 Background process to remove bulk items
-1. Analysis - Pending
+1. Analysis - In progress
 2. Implementation - Pending
 ######################################################
 Testing
@@ -26,5 +26,4 @@ Testing
 ######################################################
 
 N.T.H
-1. Simple frontend.
-2. Nswag implementation.
+1. Simple frontend - DONE
