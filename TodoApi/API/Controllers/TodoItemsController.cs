@@ -19,7 +19,20 @@ namespace TodoApi.API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetTodoItems(long listId, CancellationToken cancellationToken = default)
         {
-            return await Mediator.Send(new GetTodoItemsQuery() { ListId = listId }, cancellationToken);
+            return await Mediator.Send(new GetTodoItemsQuery()
+            {
+                ListId = listId
+            }, cancellationToken);
+        }
+
+        [HttpDelete("{itemId}")]
+        public async Task<ActionResult> DeleteTodoItem(long listId, long itemId, CancellationToken cancellationToken = default)
+        {
+            return await Mediator.Send(new DeleteTodoItemCommand()
+            {
+                ItemId = listId,
+                ListId = itemId
+            }, cancellationToken);
         }
     }
 }

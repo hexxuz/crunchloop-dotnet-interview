@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TodoApi.Application.TodoItems.DTOs;
 using TodoApi.Domain.Models.Items;
 using TodoApi.Domain.Models.Lists;
@@ -10,7 +9,6 @@ namespace TodoApi.Application.TodoItems.Commands
 {
     public class CreateTodoItemCommand : IRequest<ActionResult>
     {
-        [FromRoute]
         public long ListId { get; set; }
         public required string Name { get; set; }
     }
@@ -18,21 +16,19 @@ namespace TodoApi.Application.TodoItems.Commands
     public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, ActionResult>
     {
         private readonly IDbContext _context;
+        private readonly ITodoListsHelper _todoListsHelper;
 
-        public CreateTodoItemCommandHandler(IDbContext context)
+        public CreateTodoItemCommandHandler(IDbContext context, ITodoListsHelper todoListsHelper)
         {
             _context = context;
+            _todoListsHelper = todoListsHelper;
         }
 
         public async Task<ActionResult> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                // ToDo: Given that this will be repeated on every endpoint, analyze implement a helper.
-                TodoList? list = await _context.TodoList
-                    .Where(list => list.Id == request.ListId)
-                    .Include(list => list.TodoItems)
-                    .FirstOrDefaultAsync(cancellationToken);
+                TodoList? list = await _todoListsHelper.GetTodoList(request.ListId, true);
 
                 if (list is null)
                     return new NotFoundResult();
