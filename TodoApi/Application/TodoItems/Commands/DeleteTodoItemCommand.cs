@@ -25,7 +25,7 @@ namespace TodoApi.Application.TodoItems.Commands
 
         public async Task<ActionResult> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
         {
-            if (!await _todoListsHelper.TodoListExists(request.ItemId, cancellationToken))
+            if (!await _todoListsHelper.TodoListExists(request.ListId, cancellationToken))
                 return new NotFoundResult();
 
             TodoItem? todoItem = await _context.TodoItem

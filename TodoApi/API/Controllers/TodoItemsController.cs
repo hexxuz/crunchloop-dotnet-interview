@@ -49,8 +49,8 @@ namespace TodoApi.API.Controllers
         {
             return await Mediator.Send(new DeleteTodoItemCommand()
             {
-                ItemId = listId,
-                ListId = itemId
+                ItemId = itemId,
+                ListId = listId
             }, cancellationToken);
         }
     }
