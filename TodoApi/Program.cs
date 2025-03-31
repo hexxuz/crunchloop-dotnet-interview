@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using TodoApi.Infrastructure.Helpers;
 using TodoApi.Infrastructure.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ builder
         opt.UseSqlServer(builder.Configuration.GetConnectionString("TodoContext"))
     )
     .AddScoped<IDbContext, TodoContext>()
+    .AddScoped<ITodoListsHelper, TodoListsHelper>()
     .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
     .AddEndpointsApiExplorer()
     .AddControllers()
