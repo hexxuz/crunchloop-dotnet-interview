@@ -13,13 +13,17 @@ namespace TodoApi.Infrastructure.Helpers
             _context = context;
         }
 
-        public async Task<TodoList?> GetTodoList(long id, bool includeItems, CancellationToken cancellationToken)
+        public async Task<TodoList?> GetTodoList(long id, bool includeItems, bool trackEntities, CancellationToken cancellationToken)
         {
             IQueryable<TodoList> query = _context.TodoList
                 .Where(list => list.Id == id);
 
             if (includeItems)
                 query = query.Include(list => list.TodoItems);
+
+            query = trackEntities ?
+                query.AsTracking() :
+                query.AsNoTracking();
 
             TodoList? list = await query.FirstOrDefaultAsync();
 

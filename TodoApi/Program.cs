@@ -10,6 +10,8 @@ builder
     )
     .AddScoped<IDbContext, TodoContext>()
     .AddScoped<ITodoListsHelper, TodoListsHelper>()
+    .AddSingleton<IBackgroundTodoItemsBulkDeleteQueue, BackgroundTodoItemsBulkDeleteQueue>()
+    .AddHostedService<BackgroundServiceManager>()
     .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
     .AddEndpointsApiExplorer()
     .AddControllers()

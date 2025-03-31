@@ -17,8 +17,8 @@ Interfaces & abstraction
 4. CQRS  (MediatR setup) - DONE
 ######################################################
 Background process to remove bulk items
-1. Analysis - In progress
-2. Implementation - Pending
+1. Analysis - DONE
+2. Implementation - In progress
 ######################################################
 Testing
 1. Test cases definition - Pending
