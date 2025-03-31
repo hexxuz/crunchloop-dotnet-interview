@@ -24,3 +24,7 @@ Testing
 1. Test cases definition - Pending
 2. Tests implementation - Pending
 ######################################################
+
+N.T.H
+1. Simple frontend.
+2. Nswag implementation.

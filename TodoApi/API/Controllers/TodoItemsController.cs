@@ -9,7 +9,7 @@ namespace TodoApi.API.Controllers
     public class TodoItemsController : BaseController
     {
         [HttpPost]
-        public async Task<ActionResult> PostTodoItem(long listId, [FromBody] CreateTodoItemCommand command, CancellationToken cancellationToken = default)
+        public async Task<ActionResult> PostTodoItem(long listId, [FromBody] PostTodoItemCommand command, CancellationToken cancellationToken = default)
         {
             command.ListId = listId;
 
@@ -23,6 +23,25 @@ namespace TodoApi.API.Controllers
             {
                 ListId = listId
             }, cancellationToken);
+        }
+
+        [HttpGet("{itemId}")]
+        public async Task<ActionResult> GetTodoItem(long listId, long itemId, CancellationToken cancellationToken = default)
+        {
+            return await Mediator.Send(new GetTodoItemQuery()
+            {
+                ListId = listId,
+                ItemId = itemId
+            }, cancellationToken);
+        }
+
+        [HttpPut("{itemId}")]
+        public async Task<ActionResult> PutTodoItem(long listId, long itemId, [FromBody] UpdateTodoItemCommand command, CancellationToken cancellationToken = default)
+        {
+            command.ListId = listId;
+            command.ItemId = itemId;
+
+            return await Mediator.Send(command, cancellationToken);
         }
 
         [HttpDelete("{itemId}")]

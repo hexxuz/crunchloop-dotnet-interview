@@ -36,7 +36,7 @@ namespace TodoApi.Application.TodoItems.Commands
                 return new NotFoundResult();
 
             if (todoItem.ListId != request.ListId)
-                return new BadRequestResult(); // Define how to manage this case.
+                return new NotFoundResult();
 
             _context.TodoItem.Remove(todoItem);
 

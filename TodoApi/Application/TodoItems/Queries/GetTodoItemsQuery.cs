@@ -38,7 +38,8 @@ namespace TodoApi.Application.TodoItems.Queries
                 {
                     Id = item.Id,
                     Name = item.Name,
-                    IsCompleted = item.IsCompleted
+                    IsCompleted = item.IsCompleted,
+                    ListId = list.Id
                 };
             }).ToList();
 

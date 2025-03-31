@@ -7,24 +7,24 @@ using TodoApi.Infrastructure.Interfaces;
 
 namespace TodoApi.Application.TodoItems.Commands
 {
-    public class CreateTodoItemCommand : IRequest<ActionResult>
+    public class PostTodoItemCommand : IRequest<ActionResult>
     {
         public long ListId { get; set; }
         public required string Name { get; set; }
     }
 
-    public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, ActionResult>
+    public class PostTodoItemCommandHandler : IRequestHandler<PostTodoItemCommand, ActionResult>
     {
         private readonly IDbContext _context;
         private readonly ITodoListsHelper _todoListsHelper;
 
-        public CreateTodoItemCommandHandler(IDbContext context, ITodoListsHelper todoListsHelper)
+        public PostTodoItemCommandHandler(IDbContext context, ITodoListsHelper todoListsHelper)
         {
             _context = context;
             _todoListsHelper = todoListsHelper;
         }
 
-        public async Task<ActionResult> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
+        public async Task<ActionResult> Handle(PostTodoItemCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -53,12 +53,14 @@ namespace TodoApi.Application.TodoItems.Commands
                    actionName: "PostTodoItem",
                    controllerName: "TodoItems",
                    routeValues: new { id = newItem.Id },
-                   // Implement auto mapper
+
+                   // ToDo: Implement auto mapper
                    value: new TodoItemDTO()
                    {
                        Id = newItem.Id,
                        Name = newItem.Name,
-                       IsCompleted = newItem.IsCompleted
+                       IsCompleted = newItem.IsCompleted,
+                       ListId = list.Id
                    }
                );
             }
