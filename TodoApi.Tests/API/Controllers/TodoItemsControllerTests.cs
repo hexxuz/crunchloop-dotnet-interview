@@ -8,7 +8,7 @@ using TodoApi.Application.TodoItems.Commands;
 using TodoApi.Application.TodoItems.Queries;
 using TodoApi.Infrastructure.Interfaces;
 
-namespace TodoApi.Tests.Controllers;
+namespace TodoApi.Tests.API.Controllers;
 
 public class TodoItemsControllerTests
 {

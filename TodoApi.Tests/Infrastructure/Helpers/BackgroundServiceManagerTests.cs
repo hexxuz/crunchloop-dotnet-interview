@@ -5,7 +5,7 @@ using TodoApi.Domain.Models.Lists;
 using TodoApi.Infrastructure.Helpers;
 using TodoApi.Infrastructure.Interfaces;
 
-namespace TodoApi.Tests.Helpers;
+namespace TodoApi.Tests.Infrastructure.Helpers;
 
 public class BackgroundServiceManagerTests
 {

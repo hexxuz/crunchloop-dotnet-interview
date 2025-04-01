@@ -1,6 +1,6 @@
 ﻿using TodoApi.Infrastructure.Helpers;
 
-namespace TodoApi.Tests.Helpers
+namespace TodoApi.Tests.Infrastructure.Helpers
 {
     public class BackgroundTodoItemsBulkDeleteQueueTests
     {
