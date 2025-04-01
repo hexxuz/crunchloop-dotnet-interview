@@ -13,12 +13,10 @@ namespace TodoApi.Application.TodoItems.Queries
 
     public class GetTodoItemsQueryHandler : IRequestHandler<GetTodoItemsQuery, ActionResult>
     {
-        private readonly IDbContext _context;
         private readonly ITodoListsHelper _todoListsHelper;
 
-        public GetTodoItemsQueryHandler(IDbContext context, ITodoListsHelper todoListsHelper)
+        public GetTodoItemsQueryHandler(ITodoListsHelper todoListsHelper)
         {
-            _context = context;
             _todoListsHelper = todoListsHelper;
         }
 
