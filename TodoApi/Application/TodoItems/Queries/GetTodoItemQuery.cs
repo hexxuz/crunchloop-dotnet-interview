@@ -26,23 +26,31 @@ namespace TodoApi.Application.TodoItems.Queries
 
         public async Task<ActionResult> Handle(GetTodoItemQuery request, CancellationToken cancellationToken)
         {
-            if (!await _listsHelper.TodoListExists(request.ListId, cancellationToken))
-                return new NotFoundResult();
-
-            TodoItem? item = await _context.TodoItem
-                .Where(item => item.Id == request.ListId)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (item is null)
-                return new NotFoundResult();
-
-            return new OkObjectResult(new TodoItemDTO()
+            try
             {
-                Id = item.Id,
-                IsCompleted = item.IsCompleted,
-                Name = item.Name,
-                ListId = item.ListId
-            });
+                if (!await _listsHelper.TodoListExists(request.ListId, cancellationToken))
+                    return new NotFoundResult();
+
+                TodoItem? item = await _context.TodoItem
+                    .Where(item => item.Id == request.ListId)
+                    .FirstOrDefaultAsync(cancellationToken);
+
+                if (item is null)
+                    return new NotFoundResult();
+
+                return new OkObjectResult(new TodoItemDTO()
+                {
+                    Id = item.Id,
+                    IsCompleted = item.IsCompleted,
+                    Name = item.Name,
+                    ListId = item.ListId
+                });
+            }
+            catch (Exception ex)
+            {
+                // Analyze and define how to handle exceptions.
+                return new StatusCodeResult(500);
+            }
         }
     }
 }

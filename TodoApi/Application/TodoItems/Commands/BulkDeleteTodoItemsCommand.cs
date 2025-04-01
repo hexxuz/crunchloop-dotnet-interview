@@ -22,12 +22,20 @@ namespace TodoApi.Application.TodoItems.Commands
 
         public async Task<ActionResult> Handle(BulkDeleteTodoItemsCommand request, CancellationToken cancellationToken)
         {
-            if (!await _todoListsHelper.TodoListExists(request.ListId, cancellationToken))
-                return new NotFoundResult();
+            try
+            {
+                if (!await _todoListsHelper.TodoListExists(request.ListId, cancellationToken))
+                    return new NotFoundResult();
 
-            _bulkDeleteQueue.Enqueue(request.ListId);
+                _bulkDeleteQueue.Enqueue(request.ListId);
 
-            return new OkResult();
+                return new OkResult();
+            }
+            catch (Exception ex)
+            {
+                // Analyze and define how to handle exceptions.
+                return new StatusCodeResult(500);
+            }
         }
     }
 }

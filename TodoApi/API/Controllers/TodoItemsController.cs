@@ -74,6 +74,7 @@ namespace TodoApi.API.Controllers
             }, cancellationToken);
         }
 
+        // ToDo: Delete this; only for bulk delete testing purposes
         [HttpPost("bulkcreation")]
         public async Task<ActionResult> PostTodoItemsBulk(long listId, CancellationToken cancellationToken = default)
         {
@@ -84,7 +85,7 @@ namespace TodoApi.API.Controllers
 
             list.TodoItems = new List<TodoItem>();
 
-            for (int i = 0; i < 5000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 list.TodoItems.Add(new() { Name = i.ToString() });
             }

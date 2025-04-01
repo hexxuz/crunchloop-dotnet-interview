@@ -28,33 +28,41 @@ namespace TodoApi.Application.TodoItems.Commands
 
         public async Task<ActionResult> Handle(UpdateTodoItemCommand request, CancellationToken cancellationToken)
         {
-            if (!await _listsHelper.TodoListExists(request.ListId, cancellationToken))
-                return new NotFoundResult();
-
-            TodoItem? item = await _context.TodoItem
-                .Where(item => item.Id == request.ItemId)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (item is null)
-                return new NotFoundResult();
-
-            if (item.ListId != request.ListId)
-                return new NotFoundResult();
-
-            item.IsCompleted = request.IsCompleted;
-            item.Name = request.Name;
-
-            _context.TodoItem.Update(item);
-
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return new OkObjectResult(new TodoItemDTO()
+            try
             {
-                Id = item.Id,
-                Name = item.Name,
-                IsCompleted = item.IsCompleted,
-                ListId = item.ListId
-            });
+                if (!await _listsHelper.TodoListExists(request.ListId, cancellationToken))
+                    return new NotFoundResult();
+
+                TodoItem? item = await _context.TodoItem
+                    .Where(item => item.Id == request.ItemId)
+                    .FirstOrDefaultAsync(cancellationToken);
+
+                if (item is null)
+                    return new NotFoundResult();
+
+                if (item.ListId != request.ListId)
+                    return new NotFoundResult();
+
+                item.IsCompleted = request.IsCompleted;
+                item.Name = request.Name;
+
+                _context.TodoItem.Update(item);
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return new OkObjectResult(new TodoItemDTO()
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    IsCompleted = item.IsCompleted,
+                    ListId = item.ListId
+                });
+            }
+            catch (Exception ex)
+            {
+                // Analyze and define how to handle exceptions.
+                return new StatusCodeResult(500);
+            }
         }
     }
 }

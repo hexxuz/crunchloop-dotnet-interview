@@ -25,24 +25,32 @@ namespace TodoApi.Application.TodoItems.Commands
 
         public async Task<ActionResult> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
         {
-            if (!await _todoListsHelper.TodoListExists(request.ListId, cancellationToken))
-                return new NotFoundResult();
+            try
+            {
+                if (!await _todoListsHelper.TodoListExists(request.ListId, cancellationToken))
+                    return new NotFoundResult();
 
-            TodoItem? todoItem = await _context.TodoItem
-                .Where(item => item.Id == request.ItemId)
-                .FirstOrDefaultAsync(cancellationToken);
+                TodoItem? todoItem = await _context.TodoItem
+                    .Where(item => item.Id == request.ItemId)
+                    .FirstOrDefaultAsync(cancellationToken);
 
-            if (todoItem is null)
-                return new NotFoundResult();
+                if (todoItem is null)
+                    return new NotFoundResult();
 
-            if (todoItem.ListId != request.ListId)
-                return new NotFoundResult();
+                if (todoItem.ListId != request.ListId)
+                    return new NotFoundResult();
 
-            _context.TodoItem.Remove(todoItem);
+                _context.TodoItem.Remove(todoItem);
 
-            await _context.SaveChangesAsync(cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
 
-            return new NoContentResult();
+                return new NoContentResult();
+            }
+            catch (Exception ex)
+            {
+                // Analyze and define how to handle exceptions.
+                return new StatusCodeResult(500);
+            }
         }
     }
 }
