@@ -24,7 +24,7 @@ namespace TodoApi.Application.TodoItems.Queries
         {
             try
             {
-                TodoList? list = await _todoListsHelper.GetTodoList(request.ListId, true, true, cancellationToken);
+                TodoList? list = await _todoListsHelper.GetTodoList(request.ListId, true, false, cancellationToken);
 
                 if (list is null)
                     return new NotFoundResult();

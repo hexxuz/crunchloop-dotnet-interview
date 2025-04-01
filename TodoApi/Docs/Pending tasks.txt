@@ -18,11 +18,11 @@ Interfaces & abstraction
 ######################################################
 Background process to remove bulk items
 1. Analysis - DONE
-2. Implementation - In progress
+2. Implementation - DONE
 ######################################################
 Testing
-1. Test cases definition - Pending
-2. Tests implementation - Pending
+1. Test cases definition - DONE
+2. Tests implementation - DONE
 ######################################################
 
 N.T.H
