@@ -32,7 +32,7 @@ namespace TodoApi.Application.TodoItems.Queries
                     return new NotFoundResult();
 
                 TodoItem? item = await _context.TodoItem
-                    .Where(item => item.Id == request.ListId)
+                    .Where(item => item.Id == request.ItemId)
                     .FirstOrDefaultAsync(cancellationToken);
 
                 if (item is null)
