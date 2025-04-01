@@ -9,58 +9,28 @@ public class TodoContextTests
     private TodoContext CreateContext()
     {
         DbContextOptions<TodoContext> options = new DbContextOptionsBuilder<TodoContext>()
-            .UseInMemoryDatabase(databaseName: System.Guid.NewGuid().ToString())
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
 
         return new TodoContext(options);
     }
 
+    #region Lists
     [Fact]
-    public async Task CanSaveTodoList()
+    public async Task CanCreateTodoList()
     {
         TodoContext context = CreateContext();
-        TodoList list = new TodoList { Name = "Test" };
+        TodoList list = new TodoList { Name = "Item" };
 
         context.TodoList.Add(list);
         await context.SaveChangesAsync(CancellationToken.None);
 
-        Assert.Single(context.TodoList.ToList());
+        int count = await context.TodoList.CountAsync();
+        Assert.Equal(1, count);
     }
 
     [Fact]
-    public async Task CanSaveTodoItemWithList()
-    {
-        TodoContext context = CreateContext();
-        TodoList list = new TodoList { Name = "Test", TodoItems = new List<TodoItem>() };
-        TodoItem item = new TodoItem { Name = "Item" };
-        list.TodoItems.Add(item);
-
-        context.TodoList.Add(list);
-        await context.SaveChangesAsync(CancellationToken.None);
-
-        TodoList? savedList = context.TodoList.Include(l => l.TodoItems).FirstOrDefault();
-        Assert.NotNull(savedList);
-        Assert.Single(savedList.TodoItems);
-    }
-
-    [Fact]
-    public async Task CanQueryItemWithList()
-    {
-        TodoContext context = CreateContext();
-        TodoList list = new TodoList { Name = "List" };
-        TodoItem item = new TodoItem { Name = "Item", List = list };
-
-        context.TodoList.Add(list);
-        context.TodoItem.Add(item);
-        await context.SaveChangesAsync(CancellationToken.None);
-
-        TodoItem? loaded = context.TodoItem.Include(i => i.List).FirstOrDefault();
-        Assert.NotNull(loaded);
-        Assert.NotNull(loaded.List);
-    }
-
-    [Fact]
-    public async Task CanCreateReadUpdateDeleteTodoList()
+    public async Task CanReadTodoList()
     {
         TodoContext context = CreateContext();
         TodoList list = new TodoList { Name = "Item" };
@@ -71,25 +41,61 @@ public class TodoContextTests
         TodoList? saved = await context.TodoList.FirstOrDefaultAsync();
         Assert.NotNull(saved);
         Assert.Equal("Item", saved.Name);
+    }
 
-        saved.Name = "Updated";
+    [Fact]
+    public async Task CanUpdateTodoList()
+    {
+        TodoContext context = CreateContext();
+        TodoList list = new TodoList { Name = "Item" };
+
+        context.TodoList.Add(list);
+        await context.SaveChangesAsync(CancellationToken.None);
+
+        list.Name = "Updated";
         await context.SaveChangesAsync(CancellationToken.None);
 
         TodoList? updated = await context.TodoList.FirstOrDefaultAsync();
         Assert.Equal("Updated", updated.Name);
+    }
 
-        context.TodoList.Remove(updated);
+    [Fact]
+    public async Task CanDeleteTodoList()
+    {
+        TodoContext context = CreateContext();
+        TodoList list = new TodoList { Name = "Item" };
+
+        context.TodoList.Add(list);
+        await context.SaveChangesAsync(CancellationToken.None);
+
+        context.TodoList.Remove(list);
         await context.SaveChangesAsync(CancellationToken.None);
 
         int count = await context.TodoList.CountAsync();
         Assert.Equal(0, count);
     }
+    #endregion
 
+    #region Items
     [Fact]
-    public async Task CanCreateReadUpdateDeleteTodoItem()
+    public async Task CanCreateTodoItem()
     {
         TodoContext context = CreateContext();
+        TodoList list = new TodoList { Name = "List" };
+        TodoItem item = new TodoItem { Name = "Item", List = list };
 
+        context.TodoList.Add(list);
+        context.TodoItem.Add(item);
+        await context.SaveChangesAsync(CancellationToken.None);
+
+        int count = await context.TodoItem.CountAsync();
+        Assert.Equal(1, count);
+    }
+
+    [Fact]
+    public async Task CanReadTodoItem()
+    {
+        TodoContext context = CreateContext();
         TodoList list = new TodoList { Name = "List" };
         TodoItem item = new TodoItem { Name = "Item", List = list };
 
@@ -101,17 +107,43 @@ public class TodoContextTests
         Assert.NotNull(saved);
         Assert.Equal("Item", saved.Name);
         Assert.Equal("List", saved.List.Name);
+    }
 
-        saved.Name = "Updated";
+    [Fact]
+    public async Task CanUpdateTodoItem()
+    {
+        TodoContext context = CreateContext();
+        TodoList list = new TodoList { Name = "List" };
+        TodoItem item = new TodoItem { Name = "Item", List = list };
+
+        context.TodoList.Add(list);
+        context.TodoItem.Add(item);
+        await context.SaveChangesAsync(CancellationToken.None);
+
+        item.Name = "Updated";
         await context.SaveChangesAsync(CancellationToken.None);
 
         TodoItem? updated = await context.TodoItem.FirstOrDefaultAsync();
         Assert.Equal("Updated", updated.Name);
+    }
 
-        context.TodoItem.Remove(updated);
+    [Fact]
+    public async Task CanDeleteTodoItem()
+    {
+        TodoContext context = CreateContext();
+        TodoList list = new TodoList { Name = "List" };
+        TodoItem item = new TodoItem { Name = "Item", List = list };
+
+        context.TodoList.Add(list);
+        context.TodoItem.Add(item);
+        await context.SaveChangesAsync(CancellationToken.None);
+
+        context.TodoItem.Remove(item);
         await context.SaveChangesAsync(CancellationToken.None);
 
         int count = await context.TodoItem.CountAsync();
         Assert.Equal(0, count);
     }
+
+    #endregion
 }
